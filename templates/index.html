@@ -1,0 +1,21 @@
+{% extends "_layout.html" %}
+
+{%- block title -%}
+  {{ title }}
+{%- endblock -%}
+
+{%- block content -%}
+<kor-page flex-direction="column">
+  {% include "fragments/app-bar.fragment.html" %}
+
+  <main>
+    <div class="app-container">
+      <kor-card>
+        {% include "fragments/new-note.fragment.html" %}
+        {% include "fragments/note-list.fragment.html" %}
+      </kor-card>
+    </div>
+  </main>
+
+</kor-page>
+{%- endblock -%}

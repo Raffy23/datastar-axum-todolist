@@ -1,0 +1,67 @@
+:root {
+  --note-content-width: 400px;
+}
+
+.app-container {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.new-note-container {
+  display:flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+}
+
+.note {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 16px;
+  height: 58px;
+  border-bottom: 1px solid rgba(var(--neutral-1),.15);
+}
+
+.note kor-checkbox {
+  width: var(--note-content-width);
+}
+
+.note kor-input {
+  width: var(--note-content-width);
+}
+
+.note__actions {
+  display: flex;
+  gap: 8px;
+}
+
+.note-list-container {
+  display:flex;
+  align-items: center;
+  justify-content: center;
+}
+
+#note-list {
+  display: flex;
+  flex-direction: column;
+  gap: 0px;
+}
+
+#note-list > :first-child {
+  border-top: 1px solid rgba(var(--neutral-1),.15);
+}
+
+main {
+  padding: 16px;
+}
+
+.w-460 {
+  width: 460px;
+}
+
+.w-520 {
+  width: 520px;
+}
+

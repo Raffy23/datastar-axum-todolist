@@ -1,0 +1,100 @@
+---
+###############################################################
+#                   Authelia configuration                    #
+###############################################################
+server:
+  address: 'tcp://:9091'
+
+log:
+  level: 'debug'
+
+authentication_backend:
+  file:
+    path: '/config/users_database.yml'
+
+access_control:
+  default_policy: 'one_factor'
+  rules:
+    - domain: '127.0.0.1'
+      policy: 'one_factor'
+
+session:
+  secret: '{{ secret "/secrets/SESSION_SECRET" }}'
+  cookies:
+    - name: 'authelia_session'
+      domain: '127.0.0.1'  # Should match whatever your root protected domain is
+      authelia_url: 'https://127.0.0.1:9091'
+      expiration: '1 hour'
+      inactivity: '5 minutes'
+
+regulation:
+  max_retries: 3
+  find_time: '2 minutes'
+  ban_time: '5 minutes'
+
+storage:
+  encryption_key: '{{ secret "/secrets/STORAGE_ENCRYPTION_KEY" }}'
+  local:
+    path: '/config/db.sqlite3'
+
+notifier:
+  filesystem:
+    filename: '/config/notification.txt'
+
+identity_validation:
+  reset_password:
+    jwt_secret: '{{ secret "/secrets/JWT_SECRET" }}'
+
+identity_providers:
+  oidc:
+    hmac_secret: '{{ secret "/secrets/OIDC_HMAC" }}'
+    jwks:
+      - key_id: 'ecdsa-key'
+        algorithm: 'ES256'
+        use: 'sig'
+        key: {{ secret "/secrets/jwtES256.key" | mindent 10 "|" | msquote }}
+      - key_id: 'rsa-key'
+        algorithm: 'RS256'
+        use: 'sig'
+        key: {{ secret "/secrets/jwtRS256.key" | mindent 10 "|" | msquote }}
+    enable_client_debug_messages: false
+    lifespans:
+      access_token: '1h'
+      authorize_code: '1m'
+      id_token: '1h'
+      refresh_token: '1h30m'
+    cors:
+      endpoints:
+        - 'authorization'
+        - 'token'
+        - 'revocation'
+        - 'introspection'
+        - 'userinfo'
+      allowed_origins:
+        - 'https://127.0.0.1:3000'
+      allowed_origins_from_client_redirect_uris: false
+    clients:
+      - client_id: 'test-client'
+        client_name: 'ToDo List'
+        client_secret: '{{ secret "/secrets/OIDC_TEST_CLIENT" }}'
+        public: false
+        authorization_policy: 'one_factor'
+        consent_mode: 'implicit' #'pre-configured'
+        pre_configured_consent_duration: '1y'
+        grant_types:
+          - 'refresh_token'
+          - 'authorization_code'
+        response_types:
+          - 'code'
+        redirect_uris:
+          - 'http://127.0.0.1:3000/login/authorization/callback'
+        audience:
+          - 'https://127.0.0.1:3000'
+        scopes:
+          - 'openid'
+          - 'groups'
+          - 'email'
+          - 'profile'
+          # requires consent_mode explicit or pre-configured
+          #- 'offline_access'
+

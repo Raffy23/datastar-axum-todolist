@@ -1,0 +1,7 @@
+<div class="note" id="note-{{ note.id }}" data-signals="{ content: '{{ note.content }}'}">
+  <kor-input value="{{ note.content }}" no-clear data-bind-content></kor-input>
+  <div class="note__actions">
+    <kor-button icon="save" color="tertiary" data-on-click="@put('/note/{{ note.id }}')"></kor-button>
+    <kor-button icon="close" color="tertiary" data-on-click="@get('/note/{{ note.id }}')"></kor-button>
+  </div>
+</div>

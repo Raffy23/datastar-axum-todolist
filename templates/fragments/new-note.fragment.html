@@ -1,0 +1,12 @@
+ <div class="new-note-container" data-signals="{note: 'Hello World'}">
+  <kor-input
+    class="w-460"
+    label="What needs to be done?"
+    data-bind-note
+    icon="assignment"
+    type="text"></kor-input>
+  <kor-button
+    icon="add"
+    color="Primary"
+    data-on-click="@post('/note')"></kor-button>
+</div>

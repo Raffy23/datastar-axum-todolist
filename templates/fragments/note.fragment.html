@@ -1,0 +1,10 @@
+<div class="note" id="note-{{ note.id }}">
+  <kor-checkbox
+    label="{{ note.content }}"
+    {% if note.checked %}active{% endif %}
+    data-on-active-changed="@put(`/note/{{ note.id }}/${evt.target.getAttribute('active') === null ? ':uncheck' : ':check'}`)"></kor-checkbox>
+  <div class="note__actions">
+    <kor-button icon="edit" color="tertiary" data-on-click="@get('/note/{{ note.id }}/:edit')" ></kor-button>
+    <kor-button icon="delete" color="tertiary" data-on-click="@delete('/note/{{ note.id }}')"></kor-button>
+  </div>
+</div>

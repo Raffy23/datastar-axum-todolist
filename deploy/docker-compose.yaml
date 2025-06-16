@@ -1,0 +1,16 @@
+services:
+  authelia:
+    container_name: 'authelia'
+    image: 'ghcr.io/authelia/authelia:4.39'
+    restart: 'no'
+    ports:
+      - '127.0.0.1:9091:9091'
+    healthcheck:
+      disable: true
+    environment:
+      PUID: '1000'
+      PGID: '1000'
+      X_AUTHELIA_CONFIG_FILTERS: 'template'
+    volumes:
+      - './data/authelia/config:/config'
+      - './data/authelia/secrets:/secrets'

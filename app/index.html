@@ -1,0 +1,25 @@
+{#-
+  This file is the result of 'npm run build'.
+  All changes will be lost, if not edited in /app/index.html.
+-#}
+{%- if partial %}
+{% block content %}{% endblock %}
+{%- else %}
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <link rel="icon" type="image/svg+xml" href="vite.svg" />
+
+    <title>{%- block title %}{{ title }}{% endblock %}</title>
+
+    <link rel="stylesheet" href="/app.css" />
+    <script type="module" src="/app.ts"></script>
+  </head>
+  <body>
+    {%- block content %}{% endblock %}
+  </body>
+</html>
+{%- endif %}
